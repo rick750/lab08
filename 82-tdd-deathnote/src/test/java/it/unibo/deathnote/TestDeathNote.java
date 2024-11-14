@@ -10,6 +10,8 @@ import static it.unibo.deathnote.api.DeathNote.RULES;
 import it.unibo.deathnote.impl.DeathNoteImplementation;
 
 class TestDeathNote {
+    private static final String NAME_PAPERINO = "Paperino";
+    private static final String NAME_PIPPO = "Pippo";
     private static final int ZERO = 0;
     private static final int NEG_VALUE = -1;
     private DeathNoteImplementation dn;
@@ -20,20 +22,20 @@ class TestDeathNote {
     }
 
     /**
-        Test that rule number 0 and negative rules do not exist in the DeathNote rules
+        Tests that rule number 0 and negative rules do not exist in the DeathNote rules
     */
     @Test
     void TestInvalidRules() {
         try {
             dn.getRule(ZERO);
-        } catch (IllegalArgumentException e) {          
+        } catch (final IllegalArgumentException e) {          
             assertTrue(e instanceof IllegalArgumentException);
             assertNotNull(e.getMessage());  
             assertFalse(e.getMessage().isBlank());
         }
         try {
             dn.getRule(NEG_VALUE);
-        } catch (IllegalArgumentException e) {
+        } catch (final IllegalArgumentException e) {
             assertTrue(e instanceof IllegalArgumentException);
             assertNotNull(e.getMessage());
             assertFalse(e.getMessage().isBlank());
@@ -41,7 +43,7 @@ class TestDeathNote {
     } 
 
     /**
-        Test that no rule is empty or null in the DeathNote rules
+        Checks that no rule is empty or null in the DeathNote rules
     */
     @Test
     void TestValidRules() {
@@ -51,5 +53,19 @@ class TestDeathNote {
             assertFalse(rule.isBlank());
         }
     }
+
+    /**
+     * Checks that the human whose name is written in the DeathNote will eventually die
+     */
+    @Test
+    void TestActualDeath() {
+        assertFalse(dn.isNameWritten(NAME_PIPPO));
+        dn.writeName(NAME_PIPPO);
+        assertTrue(dn.isNameWritten(NAME_PIPPO));
+        assertFalse(dn.isNameWritten(NAME_PAPERINO));
+        assertFalse(dn.isNameWritten(""));
+    }
+
+
 
 }
