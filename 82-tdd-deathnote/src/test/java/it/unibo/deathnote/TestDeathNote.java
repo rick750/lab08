@@ -13,6 +13,8 @@ import static it.unibo.deathnote.api.DeathNote.RULES;
 import it.unibo.deathnote.impl.DeathNoteImplementation;
 
 class TestDeathNote {
+    private static final String EMPTY_STRING = "";
+    private static final String DETAILS = "details...";
     private static final String CAUSE_KARTING_ACCIDENT = "karting accident";
     private static final String NAME_PAPERINO = "Paperino";
     private static final String NAME_PIPPO = "Pippo";
@@ -70,7 +72,7 @@ class TestDeathNote {
         dn.writeName(NAME_PIPPO);
         assertTrue(dn.isNameWritten(NAME_PIPPO));
         assertFalse(dn.isNameWritten(NAME_PAPERINO));
-        assertFalse(dn.isNameWritten(""));
+        assertFalse(dn.isNameWritten(EMPTY_STRING));
     }
 
     /**
@@ -82,16 +84,39 @@ class TestDeathNote {
             dn.writeDeathCause(CAUSE_HEART_ATTACK);
         } catch (IllegalStateException e1) {
             assertTrue(e1 instanceof IllegalStateException);
-            dn.writeName(NAME_PIPPO);            
-            assertEquals(CAUSE_HEART_ATTACK, dn.getDeathCause(NAME_PIPPO));
-            dn.writeName(NAME_PAPERINO);            
-            assertEquals(CAUSE_KARTING_ACCIDENT, dn.getDeathCause(NAME_PAPERINO));
-            try {
-                sleep(WAIT_CAUSE);
-            } catch (InterruptedException e2) {
-            }
-            assertFalse(dn.writeDeathCause("lung cancer"));
-            assertEquals("karting accident", dn.getDeathCause(NAME_PAPERINO));
-        }   
+        }            
+        dn.writeName(NAME_PIPPO);            
+        assertEquals(CAUSE_HEART_ATTACK, dn.getDeathCause(NAME_PIPPO));
+        dn.writeName(NAME_PAPERINO);            
+        assertEquals(CAUSE_KARTING_ACCIDENT, dn.getDeathCause(NAME_PAPERINO));
+        try {
+            sleep(WAIT_CAUSE);
+        } catch (InterruptedException e2) {
+        }
+        assertFalse(dn.writeDeathCause("lung cancer"));
+        assertEquals("karting accident", dn.getDeathCause(NAME_PAPERINO));   
+    }
+
+    /**
+     * Checks that only if the cause of death is written within the next 6 seconds and 40 milliseconds of writing the death's details, it will happen
+    */
+    @Test
+    void TestDeathDetails() {
+        try {
+            dn.writeDetails(DETAILS);
+        } catch (IllegalStateException e1) {
+            assertTrue(e1 instanceof IllegalStateException);
+        } 
+        dn.writeName(NAME_PIPPO); 
+        assertEquals(EMPTY_STRING, dn.getDeathDetails(NAME_PIPPO));
+        assertTrue(dn.writeDetails("run for too long"));
+        assertEquals("run for too long", dn.getDeathDetails(NAME_PIPPO));
+        dn.writeName(NAME_PAPERINO);
+        try {
+            sleep(6100);
+        } catch (InterruptedException e) {
+        }
+        assertFalse(dn.writeDetails("he should have stopped earlier"));
+        assertEquals(EMPTY_STRING, dn.getDeathDetails(NAME_PAPERINO));
     }
 }
