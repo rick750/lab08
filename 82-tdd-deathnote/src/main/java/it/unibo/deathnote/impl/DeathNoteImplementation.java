@@ -9,12 +9,12 @@ public class DeathNoteImplementation implements DeathNote{
 
     @Override
     public String getDeathCause(String name) {
-        throw new IllegalArgumentException("The provider name is not written in this DeathNote");
+        throw new IllegalArgumentException("The provided name is not written in this DeathNote");
     }
 
     @Override
     public String getDeathDetails(String name) {
-        throw new IllegalArgumentException("The provider name is not written in this DeathNote");
+        throw new IllegalArgumentException("The provided name is not written in this DeathNote");
     }
 
     @Override

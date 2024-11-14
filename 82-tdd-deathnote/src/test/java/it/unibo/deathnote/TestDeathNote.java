@@ -1,5 +1,8 @@
 package it.unibo.deathnote;
 
+import static java.lang.Thread.sleep;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -10,10 +13,14 @@ import static it.unibo.deathnote.api.DeathNote.RULES;
 import it.unibo.deathnote.impl.DeathNoteImplementation;
 
 class TestDeathNote {
+    private static final String CAUSE_KARTING_ACCIDENT = "karting accident";
     private static final String NAME_PAPERINO = "Paperino";
     private static final String NAME_PIPPO = "Pippo";
     private static final int ZERO = 0;
     private static final int NEG_VALUE = -1;
+    private static final String CAUSE_HEART_ATTACK = "heart attack";
+    private static final int WAIT_CAUSE = 100;
+
     private DeathNoteImplementation dn;
 
     @BeforeEach
@@ -56,7 +63,7 @@ class TestDeathNote {
 
     /**
      * Checks that the human whose name is written in the DeathNote will eventually die
-     */
+    */
     @Test
     void TestActualDeath() {
         assertFalse(dn.isNameWritten(NAME_PIPPO));
@@ -66,6 +73,25 @@ class TestDeathNote {
         assertFalse(dn.isNameWritten(""));
     }
 
-
-
+    /**
+     * Checks that only if the cause of death is written within the next 40 milliseconds of writing the person's name, it will happen
+    */
+    @Test
+    void TestCauseOfDeath() {
+        try {
+            dn.writeDeathCause(CAUSE_HEART_ATTACK);
+        } catch (IllegalStateException e1) {
+            assertTrue(e1 instanceof IllegalStateException);
+            dn.writeName(NAME_PIPPO);            
+            assertEquals(CAUSE_HEART_ATTACK, dn.getDeathCause(NAME_PIPPO));
+            dn.writeName(NAME_PAPERINO);            
+            assertEquals(CAUSE_KARTING_ACCIDENT, dn.getDeathCause(NAME_PAPERINO));
+            try {
+                sleep(WAIT_CAUSE);
+            } catch (InterruptedException e2) {
+            }
+            assertFalse(dn.writeDeathCause("lung cancer"));
+            assertEquals("karting accident", dn.getDeathCause(NAME_PAPERINO));
+        }   
+    }
 }
