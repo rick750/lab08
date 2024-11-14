@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static it.unibo.deathnote.api.DeathNote.RULES;
 import it.unibo.deathnote.impl.DeathNoteImplementation;
 
 class TestDeathNote {
@@ -18,6 +19,9 @@ class TestDeathNote {
         this.dn = new DeathNoteImplementation();
     }
 
+    /**
+        Test that rule number 0 and negative rules do not exist in the DeathNote rules
+    */
     @Test
     void TestInvalidRules() {
         try {
@@ -35,5 +39,17 @@ class TestDeathNote {
             assertFalse(e.getMessage().isBlank());
         }
     } 
+
+    /**
+        Test that no rule is empty or null in the DeathNote rules
+    */
+    @Test
+    void TestValidRules() {
+        for (int i = 1; i <= RULES.size(); i++) {
+            final String rule = dn.getRule(i);          
+            assertNotNull(rule);  
+            assertFalse(rule.isBlank());
+        }
+    }
 
 }
