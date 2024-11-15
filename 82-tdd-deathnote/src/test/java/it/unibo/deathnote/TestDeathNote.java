@@ -82,7 +82,7 @@ class TestDeathNote {
     void TestCauseOfDeath() throws InterruptedException {
         try {
             dn.writeDeathCause(CAUSE_HEART_ATTACK);
-        } catch (IllegalStateException e1) {
+        } catch (final IllegalStateException e1) {
             assertTrue(e1 instanceof IllegalStateException);
         }            
         dn.writeName(NAME_PIPPO);            
@@ -101,7 +101,7 @@ class TestDeathNote {
     void TestDeathDetails() throws InterruptedException {
         try {
             dn.writeDetails(DETAILS);
-        } catch (IllegalStateException e1) {
+        } catch (final IllegalStateException e1) {
             assertTrue(e1 instanceof IllegalStateException);
         } 
         dn.writeName(NAME_PIPPO); 

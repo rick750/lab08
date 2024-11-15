@@ -19,8 +19,10 @@ public class DeathNoteImplementation implements DeathNote{
 
     @Override
     public String getRule(int ruleNumber) {
-        
-        throw new IllegalArgumentException("The given rule number is smaller than 1 or larger than the number of rule");
+        if (ruleNumber <= 0 || ruleNumber > RULES.size()) {
+            throw new IllegalArgumentException("The given rule number is smaller than 1 or larger than the number of rule");
+        }
+        return RULES.get(ruleNumber - 1);        
     }
 
     @Override
