@@ -79,7 +79,7 @@ class TestDeathNote {
      * Checks that only if the cause of death is written within the next 40 milliseconds of writing the person's name, it will happen
     */
     @Test
-    void TestCauseOfDeath() {
+    void TestCauseOfDeath() throws InterruptedException {
         try {
             dn.writeDeathCause(CAUSE_HEART_ATTACK);
         } catch (IllegalStateException e1) {
@@ -89,10 +89,7 @@ class TestDeathNote {
         assertEquals(CAUSE_HEART_ATTACK, dn.getDeathCause(NAME_PIPPO));
         dn.writeName(NAME_PAPERINO);            
         assertEquals(CAUSE_KARTING_ACCIDENT, dn.getDeathCause(NAME_PAPERINO));
-        try {
-            sleep(WAIT_CAUSE);
-        } catch (InterruptedException e2) {
-        }
+        sleep(WAIT_CAUSE);
         assertFalse(dn.writeDeathCause("lung cancer"));
         assertEquals("karting accident", dn.getDeathCause(NAME_PAPERINO));   
     }
@@ -101,7 +98,7 @@ class TestDeathNote {
      * Checks that only if the cause of death is written within the next 6 seconds and 40 milliseconds of writing the death's details, it will happen
     */
     @Test
-    void TestDeathDetails() {
+    void TestDeathDetails() throws InterruptedException {
         try {
             dn.writeDetails(DETAILS);
         } catch (IllegalStateException e1) {
@@ -112,10 +109,7 @@ class TestDeathNote {
         assertTrue(dn.writeDetails("run for too long"));
         assertEquals("run for too long", dn.getDeathDetails(NAME_PIPPO));
         dn.writeName(NAME_PAPERINO);
-        try {
-            sleep(6100);
-        } catch (InterruptedException e) {
-        }
+        sleep(6100);
         assertFalse(dn.writeDetails("he should have stopped earlier"));
         assertEquals(EMPTY_STRING, dn.getDeathDetails(NAME_PAPERINO));
     }
