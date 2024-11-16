@@ -17,7 +17,7 @@ public class DeathNoteImplementation implements DeathNote{
         private String lastName;
     
         @Override
-        public String getDeathCause(String name) {
+        public String getDeathCause(final String name) {
 			if(!deathnote.containsKey(name)) {
             	throw new IllegalArgumentException("The provided name is not written in this DeathNote");
 			}
@@ -25,7 +25,7 @@ public class DeathNoteImplementation implements DeathNote{
         }
     
         @Override
-        public String getDeathDetails(String name) {
+        public String getDeathDetails(final String name) {
             if(!deathnote.containsKey(name)) {
             	throw new IllegalArgumentException("The provided name is not written in this DeathNote");
 			}
@@ -33,7 +33,7 @@ public class DeathNoteImplementation implements DeathNote{
         }
     
         @Override
-        public String getRule(int ruleNumber) {
+        public String getRule(final int ruleNumber) {
             if (ruleNumber <= 0 || ruleNumber > RULES.size()) {
                 throw new IllegalArgumentException("The given rule number is smaller than 1 or larger than the number of rule");
             }
@@ -41,12 +41,12 @@ public class DeathNoteImplementation implements DeathNote{
         }
     
         @Override
-        public boolean isNameWritten(String name) {
+        public boolean isNameWritten(final String name) {
             return deathnote.containsKey(name);
         }
     
         @Override
-        public boolean writeDeathCause(String cause) {
+        public boolean writeDeathCause(final String cause) {
             if (cause == null || deathnote.isEmpty()) {
                 throw new IllegalStateException("There is no name written in this DeathNote, or the cause is null");
             }
@@ -58,23 +58,23 @@ public class DeathNoteImplementation implements DeathNote{
         }
     
         @Override
-        public boolean writeDetails(String details) {
+        public boolean writeDetails(final String details) {
             if (details == null || deathnote.isEmpty()) {
                 throw new IllegalStateException("There is no name written in this DeathNote, or the cause is null");
             }
             if (getCurrentTime() < deathnote.get(this.lastName).time + DETAILS_TIME) {
-				deathnote.get(this.lastName).setCause(details);
+				deathnote.get(this.lastName).setDetails(details);
 				return true;
 			}
 			return false;
     	}
 
 		@Override
-		public void writeName(String name) {
+		public void writeName(final String name) {
 			if (name == null) {
 				throw new NullPointerException("The given name is null");
 			}
-			deathnote.put(name, null);
+			deathnote.put(name, new Death());
 			this.lastName = name;
 		}
 
@@ -105,11 +105,11 @@ public class DeathNoteImplementation implements DeathNote{
             return this.details;
         }   
         
-        public void setCause(String cause) {
+        public void setCause(final String cause) {
             this.cause = cause;
         }
 
-        public void setDetails(String details) {
+        public void setDetails(final String details) {
             this.details = details;
         }
 
