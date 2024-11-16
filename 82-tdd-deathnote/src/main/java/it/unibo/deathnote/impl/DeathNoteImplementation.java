@@ -1,11 +1,16 @@
 package it.unibo.deathnote.impl;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import it.unibo.deathnote.api.DeathNote;
 
 /**
  * DeathNoteImplementation
  */
 public class DeathNoteImplementation implements DeathNote{
+
+    Map <String, Death> deathnote = new HashMap<>();
 
     @Override
     public String getDeathCause(String name) {
@@ -46,6 +51,7 @@ public class DeathNoteImplementation implements DeathNote{
         if (name == null) {
             throw new NullPointerException("The given name is null");
         }
+        deathnote.put(name, null);
     }
 
     private static class Death {
