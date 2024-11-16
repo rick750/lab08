@@ -43,7 +43,27 @@ public class DeathNoteImplementation implements DeathNote{
 
     @Override
     public void writeName(String name) {
-        throw new NullPointerException("The given name is null");
+        if (name == null) {
+            throw new NullPointerException("The given name is null");
+        }
+    }
+
+    private static class Death {
+        private final String cause;
+        private final String details;
+
+        private Death(final String cause, final String details) {
+            this.cause = cause;
+            this.details = details;
+        }
+
+        public String getCause() {
+            return this.cause;
+        }
+
+        public String getDetails() {
+            return this.details;
+        }             
     }
     
 }
