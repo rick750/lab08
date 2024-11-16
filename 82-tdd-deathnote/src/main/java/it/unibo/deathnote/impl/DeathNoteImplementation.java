@@ -85,17 +85,12 @@ public class DeathNoteImplementation implements DeathNote{
         private String cause;
         private String details;
         private final long time;
-
-        private Death(final String cause, final String details) {
-            this.cause = cause;
-            this.details = details;
-            this.time = getCurrentTime();
-        }
         
-        /**private Death() {
+        private Death() {
             this.cause = DEF_CAUSE;
             this.details = EMPTY_STRING;
-        }*/
+			this.time = getCurrentTime();
+        }
 
         public String getCause() {
             return this.cause;
