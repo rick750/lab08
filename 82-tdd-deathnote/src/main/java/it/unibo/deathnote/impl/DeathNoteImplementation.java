@@ -18,12 +18,18 @@ public class DeathNoteImplementation implements DeathNote{
     
         @Override
         public String getDeathCause(String name) {
-            throw new IllegalArgumentException("The provided name is not written in this DeathNote");
+			if(!deathnote.containsKey(name)) {
+            	throw new IllegalArgumentException("The provided name is not written in this DeathNote");
+			}
+			return deathnote.get(name).getCause();
         }
     
         @Override
         public String getDeathDetails(String name) {
-            throw new IllegalArgumentException("The provided name is not written in this DeathNote");
+            if(!deathnote.containsKey(name)) {
+            	throw new IllegalArgumentException("The provided name is not written in this DeathNote");
+			}
+			return deathnote.get(name).getDetails();
         }
     
         @Override
