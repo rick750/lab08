@@ -54,14 +54,31 @@ public class DeathNoteImplementation implements DeathNote{
         deathnote.put(name, null);
     }
 
+    private static long getCurrentTime() {
+        return System.currentTimeMillis();
+    }
+
     private static class Death {
+
+
+        private static final String EMPTY_STRING = "";
+        private static final String DEF_CAUSE = "heart attack";
         private final String cause;
         private final String details;
+        private final long time;
+
+        
 
         private Death(final String cause, final String details) {
             this.cause = cause;
             this.details = details;
+            this.time = getCurrentTime();
         }
+        
+        /**private Death() {
+            this.cause = DEF_CAUSE;
+            this.details = EMPTY_STRING;
+        }*/
 
         public String getCause() {
             return this.cause;
