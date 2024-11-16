@@ -26,7 +26,7 @@ class TestDeathNote {
     private DeathNoteImplementation dn;
 
     @BeforeEach
-    void sitUp(){
+    void sitUp() {
         this.dn = new DeathNoteImplementation();
     }
 
