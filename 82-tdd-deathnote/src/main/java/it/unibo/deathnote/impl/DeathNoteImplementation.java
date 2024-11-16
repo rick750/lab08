@@ -42,8 +42,7 @@ public class DeathNoteImplementation implements DeathNote{
     
         @Override
         public boolean isNameWritten(String name) {
-            // TODO Auto-generated method stub
-            return false;
+            return deathnote.containsKey(name);
         }
     
         @Override
